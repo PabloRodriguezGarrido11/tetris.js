@@ -12,6 +12,5 @@ const figures = [pieceT, pieceI, pieceZ, pieceL, pieceC]
 
 export function getFigure() {
   let n = Math.floor(Math.random() * 5 )
-  console.log(n)
   return figures[n];
 }

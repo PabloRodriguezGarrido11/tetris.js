@@ -1,22 +1,25 @@
-import { drawPiece, updatePiece, updateMovement, createCells } from './pieces.js'
+import { drawPiece, updatePiece, updateMovement, createCells, endTable, checkGameOver } from './pieces.js'
 
-export const table = document.querySelector('.wrapper__grid')
+export let table = document.querySelector('.wrapper__grid')
 export const currentFigure = document.querySelector('.wrapper__figure')
 
 let lastRefresh = 0
 
-const FIGURE_SPEED = 3
+export var figureSpeed = 3
+export var stop = false
 
 function main(currentTime) {
-
-  window.requestAnimationFrame(main)
+  if(!stop){
+    window.requestAnimationFrame(main)
+  }
+  
   //Difference between the current refresh time and the last one
   let sinceRefresh = (currentTime - lastRefresh) / 1000
   /* 
      1/FIGURE_SPEED means that it will do the animation if the difference
      of time is 1 second or minus 
   */ 
-  if( sinceRefresh < 1 / FIGURE_SPEED) return
+  if( sinceRefresh < 1 / figureSpeed) return
   lastRefresh = currentTime
 
   update()
@@ -25,10 +28,21 @@ function main(currentTime) {
 
 function update() {
   // createCells()
+  endTable()
   updatePiece()
   updateMovement()
+
+  if(checkGameOver()) {
+    window.location.reload()
+  }
 }
 
 window.requestAnimationFrame(main)
 
+export function changeSpeedRefresh(newSpeed) {
+  figureSpeed = newSpeed
+}
 
+export function stopp(condition){
+    stop = condition
+}
