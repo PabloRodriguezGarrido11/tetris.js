@@ -1,1 +1,1 @@
-# TODO: Restriction Rotations and test game to find new issues
+# TODO: Rotation restrictions and test game to find new issues
