@@ -20,6 +20,7 @@ window.addEventListener('keydown', (event) => {
       movement = {r: 1, c: 0}
       break;
     case " ":
+      /*TODO: Restrictions Rotation Piece*/
       rotatePiece()
       break;
     default:

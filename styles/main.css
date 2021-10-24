@@ -13,6 +13,14 @@ body {
 .wrapper {
   display: flex;
 }
+.wrapper__gamep {
+  justify-content: center;
+}
+.wrapper__score {
+  color: white;
+  text-align: center;
+  font-size: 2.5rem;
+}
 .wrapper__grid {
   display: grid;
   grid-template-columns: repeat(21, 1fr);

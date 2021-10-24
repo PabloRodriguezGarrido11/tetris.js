@@ -1,4 +1,4 @@
-import { drawPiece, updatePiece, updateMovement, createCells, endTable, checkGameOver } from './pieces.js'
+import { drawPiece, updatePiece, updateMovement, endTable, checkGameOver, checkScore } from './pieces.js'
 
 export let table = document.querySelector('.wrapper__grid')
 export const currentFigure = document.querySelector('.wrapper__figure')
@@ -27,11 +27,10 @@ function main(currentTime) {
 }
 
 function update() {
-  // createCells()
   endTable()
   updatePiece()
   updateMovement()
-
+  checkScore()
   if(checkGameOver()) {
     window.location.reload()
   }
@@ -43,6 +42,6 @@ export function changeSpeedRefresh(newSpeed) {
   figureSpeed = newSpeed
 }
 
-export function stopp(condition){
+export function pause(condition){
     stop = condition
 }

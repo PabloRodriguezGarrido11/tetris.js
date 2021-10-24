@@ -1,14 +1,15 @@
-import { table, currentFigure, changeSpeedRefresh, stopp} from './main.js'
+import { table, currentFigure, changeSpeedRefresh, pause} from './main.js'
 import { getMovement } from './controls.js'
 import { getFigure } from './figures.js'
 import { createMatrix } from './utils.js'
 import { getRandomColor } from './colors.js'
 
 let color = getRandomColor()
+let score = 0
+
 export const ROWS = 21
 export const COLUMNS = 21
 export const coords = {r: 0, c: 10}
-
 export var piece = getFigure()
 
 
@@ -47,6 +48,7 @@ export function updatePiece() {
   sweepTable()
   currentFigure.innerHTML = ''
   coords.r += 1
+  console.log(score)
 }
 
 export function updateMovement() {
@@ -64,20 +66,6 @@ export function rotatePiece() {
     }
   }
   piece = newPiece
-}
-
-export function createCells() {
-  table.innerHTML = ''
-  currentFigure.innerHTML = ''
-  for (let i = 0; i < ROWS; i++) {
-    for (let j = 0; j < COLUMNS; j++) {
-      let cell = document.createElement('div')
-      cell.style.gridRowStart = i
-      cell.style.gridColumnStart = j
-      cell.classList.add('piece')
-      table.appendChild(cell)
-    }
-  }
 }
 
 export function endTable(){
@@ -147,5 +135,44 @@ export function checkGameOver() {
   let pieces = [...elements]
   return pieces.some((piece)=>{
     return parseInt(piece.style.gridRowStart) == 1
+  })
+}
+
+export function checkScore() {
+  let elements = document.getElementsByClassName('set')
+  let pieces = [...elements]
+  document.querySelector('.wrapper__score').innerHTML = "Score: " + score
+  for (let index = 0; index <=  ROWS; index++) {
+    if(pieceLine(index) == COLUMNS){
+      score += 100
+      pieces.forEach((piece) => {
+        if(parseInt(piece.style.gridRowStart) == index) {
+          piece.remove()
+        }
+      })
+      translatePieces(index)
+    }
+  }
+}
+
+function pieceLine(row) {
+  let count = 0
+  let elements = document.getElementsByClassName('set')
+  let pieces = [...elements]
+  pieces.forEach((piece)=> {
+    if(parseInt(piece.style.gridRowStart) == row){
+      count++
+    }
+  })
+  return count
+}
+
+function translatePieces(row) {
+  let elements = document.getElementsByClassName('set')
+  let pieces = [...elements]
+  pieces.forEach((piece)=> {
+    if(parseInt(piece.style.gridRowStart) < row) {
+      piece.style.gridRowStart = parseInt(piece.style.gridRowStart) +  1
+    }
   })
 }
